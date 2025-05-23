@@ -46,7 +46,7 @@ This project establishes a robust and portable development environment on Window
 2. **Clone the Repository:**
 
    ```powershell
-   git clone [<repository_url>](https://github.com/sv222/vagrant-alpine-dev)
+   git clone https://github.com/sv222/vagrant-alpine-dev
    cd vagrant-alpine-dev
    ```
 
