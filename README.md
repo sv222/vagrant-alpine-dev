@@ -29,9 +29,9 @@ This project establishes a robust and portable development environment on Window
 
 `1.` **Install Prerequisites Manually:**
 
-      - Install Vagrant: <https://developer.hashicorp.com/vagrant/downloads>
-      - Install VirtualBox: <https://www.virtualbox.org/wiki/Downloads>
-      - Install Git (optional): <https://git-scm.com/downloads>
+- Install Vagrant: [https://developer.hashicorp.com/vagrant/downloads](https://developer.hashicorp.com/vagrant/downloads)
+- Install VirtualBox: [https://www.virtualbox.org/wiki/Downloads](https://www.virtualbox.org/wiki/Downloads)
+- Install Git (optional): [https://git-scm.com/downloads](https://git-scm.com/downloads)
 
 #### Method 2: Automated Setup (Recommended)
 
