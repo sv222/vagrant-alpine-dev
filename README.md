@@ -17,9 +17,23 @@ This project establishes a robust and portable development environment on Window
 - Support for integrating with popular IDEs via SSH
 - Comprehensive troubleshooting and optimization guidance
 
-## Installation Methods
+## Prerequisites
 
-### Method 1: Automated Setup (Recommended)
+- Vagrant
+- VirtualBox
+- Git (optional, for cloning the repository)
+
+### Installation Methods
+
+#### Method 1: Manual Setup
+
+`1.` **Install Prerequisites Manually:**
+
+      - Install Vagrant: <https://developer.hashicorp.com/vagrant/downloads>
+      - Install VirtualBox: <https://www.virtualbox.org/wiki/Downloads>
+      - Install Git (optional): <https://git-scm.com/downloads>
+
+#### Method 2: Automated Setup (Recommended)
 
 ```powershell
 # Download and run the complete setup script
@@ -29,9 +43,7 @@ This project establishes a robust and portable development environment on Window
 .\setup-environment.ps1
 ```
 
-### Method 2: Manual Setup
-
-1. **Install Prerequisites Manually:**
+or you can use the following command:
 
    ```powershell
    # Install Chocolatey
@@ -43,14 +55,14 @@ This project establishes a robust and portable development environment on Window
    choco install virtualbox vagrant git -y
    ```
 
-2. **Clone the Repository:**
+`2.` **Clone the Repository:**
 
    ```powershell
    git clone https://github.com/sv222/vagrant-alpine-dev
    cd vagrant-alpine-dev
    ```
 
-3. **Start Environment:**
+`3.` **Start Environment:**
 
    ```powershell
    vagrant up
@@ -73,10 +85,69 @@ vagrant up
 ```bash
 # SSH into the VM
 vagrant ssh
-
-# Once inside, see welcome information
-~/welcome.sh
 ```
+
+### Disconnecting from the VM
+
+```bash
+# Exit the VM
+exit
+```
+
+or
+
+```powershell
+Ctrl + D
+```
+
+### Ending Your Work Session
+
+When you are finished working, you can stop or suspend the VM. Suspending is faster for resuming later, while halting performs a clean shutdown.
+
+Using the provided PowerShell scripts:
+
+```powershell
+# Option 1: Graceful shutdown
+.\scripts\stop-vm.ps1
+
+# Option 2: Suspend (faster next startup)
+.\scripts\stop-vm.ps1 -Suspend
+
+# Option 3: Force shutdown (if needed)
+.\scripts\stop-vm.ps1 -Force
+```
+
+Alternatively, you can use the standard Vagrant commands:
+
+```powershell
+# Graceful shutdown
+vagrant halt
+
+# Suspend the VM state
+vagrant suspend
+
+# Destroy the VM and all its resources (use with caution)
+vagrant destroy
+```
+
+### Output example
+<!-- markdownlint-disable MD033 -->
+
+#### Starting VM
+
+<img src="./media/output1-1.jpg" alt="image" style="width:50%;">
+<img src="./media/output1-2.jpg" alt="image" style="width:50%;">
+<img src="./media/output1-3.jpg" alt="image" style="width:50%;">
+<img src="./media/output1-4.jpg" alt="image" style="width:50%;">
+
+#### Connecting to VM
+
+<img src="./media/output2.jpg" alt="image" style="width:50%;">
+
+#### Stopping VM
+
+<img src="./media/output3.jpg" alt="image" style="width:50%;">
+<!-- markdownlint-enable MD033 -->
 
 ### Working with Docker
 
@@ -105,19 +176,6 @@ docker run -d -p 8080:80 nginx
 # 4. Edit files from Windows with your favorite IDE
 ```
 
-### Ending Your Work Session
-
-```powershell
-# Option 1: Graceful shutdown
-.\scripts\stop-vm.ps1
-
-# Option 2: Suspend (faster next startup)
-.\scripts\stop-vm.ps1 -Suspend
-
-# Option 3: Force shutdown (if needed)
-.\scripts\stop-vm.ps1 -Force
-```
-
 ## Advanced Usage
 
 ### Custom VM Configuration
@@ -132,6 +190,12 @@ vb.cpus = 4         # 4 CPU cores
 # Additional port forwarding
 config.vm.network "forwarded_port", guest: 3000, host: 3000  # Node.js
 config.vm.network "forwarded_port", guest: 5000, host: 5000  # Python/Flask
+```
+
+After making changes, run:
+
+```powershell
+vagrant reload
 ```
 
 ### Docker Development Examples
