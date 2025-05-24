@@ -1,4 +1,4 @@
-# Complete Alpine Linux Development Environment Setup (Vagrant + Docker)
+# Complete Alpine Linux Development Environment Setup (Vagrant + Docker) for Windows
 
 ## Project Overview
 
@@ -35,70 +35,54 @@ This project establishes a robust and portable development environment on Window
 
 #### Method 2: Automated Setup (Recommended)
 
-```powershell
-# Download and run the complete setup script
-# This will create everything automatically
-.\setup-environment.ps1 -InstallPrerequisites
-# Restart terminal, then run:
-.\setup-environment.ps1
-```
+    # Download and run the complete setup script
+    # This will create everything automatically
+    .\setup-environment.ps1 -InstallPrerequisites
+    # Restart terminal, then run:
+    .\setup-environment.ps1
 
 or you can use the following command:
 
-   ```powershell
-   # Install Chocolatey
-   Set-ExecutionPolicy Bypass -Scope Process -Force
-   [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-   iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    # Install Chocolatey
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
-   # Install tools
-   choco install virtualbox vagrant git -y
-   ```
+    # Install tools
+    choco install virtualbox vagrant git -y
 
 `2.` **Clone the Repository:**
 
-   ```powershell
-   git clone https://github.com/sv222/vagrant-alpine-dev
-   cd vagrant-alpine-dev
-   ```
+    git clone https://github.com/sv222/vagrant-alpine-dev
+    cd vagrant-alpine-dev
 
 `3.` **Start Environment:**
 
-   ```powershell
-   vagrant up
-   ```
+    vagrant up
 
 ## Daily Usage Workflow
 
 ### Starting Your Work Session
 
-```powershell
-# Option 1: Use management script
-.\scripts\start-vm.ps1
+    # Option 1: Use management script
+    .\scripts\start-vm.ps1
 
-# Option 2: Standard Vagrant command
-vagrant up
-```
+    # Option 2: Standard Vagrant command
+    vagrant up
 
 ### Connecting to the VM
 
-```bash
-# SSH into the VM
-vagrant ssh
-```
+    # SSH into the VM
+    vagrant ssh
 
 ### Disconnecting from the VM
 
-```bash
-# Exit the VM
-exit
-```
+    # Exit the VM
+    exit
 
 or
 
-```powershell
-Ctrl + D
-```
+    Ctrl + D
 
 ### Ending Your Work Session
 
@@ -106,29 +90,25 @@ When you are finished working, you can stop or suspend the VM. Suspending is fas
 
 Using the provided PowerShell scripts:
 
-```powershell
-# Option 1: Graceful shutdown
-.\scripts\stop-vm.ps1
+    # Option 1: Graceful shutdown
+    .\scripts\stop-vm.ps1
 
-# Option 2: Suspend (faster next startup)
-.\scripts\stop-vm.ps1 -Suspend
+    # Option 2: Suspend (faster next startup)
+    .\scripts\stop-vm.ps1 -Suspend
 
-# Option 3: Force shutdown (if needed)
-.\scripts\stop-vm.ps1 -Force
-```
+    # Option 3: Force shutdown (if needed)
+    .\scripts\stop-vm.ps1 -Force
 
 Alternatively, you can use the standard Vagrant commands:
 
-```powershell
-# Graceful shutdown
-vagrant halt
+    # Graceful shutdown
+    vagrant halt
 
-# Suspend the VM state
-vagrant suspend
+    # Suspend the VM state
+    vagrant suspend
 
-# Destroy the VM and all its resources (use with caution)
-vagrant destroy
-```
+    # Destroy the VM and all its resources (use with caution)
+    vagrant destroy
 
 ### Output example
 <!-- markdownlint-disable MD033 -->
@@ -151,30 +131,26 @@ vagrant destroy
 
 ### Working with Docker
 
-```bash
-# Inside the VM - useful aliases are pre-configured
-dps                    # docker ps
-di                     # docker images
-dex <container>        # docker exec -it <container>
-dlogs <container>      # docker logs <container>
+    # Inside the VM - useful aliases are pre-configured
+    dps                    # docker ps
+    di                     # docker images
+    dex <container>        # docker exec -it <container>
+    dlogs <container>      # docker logs <container>
 
-# Example: Run a simple web server
-docker run -d -p 8080:80 nginx
-# Access at http://localhost:8080 from Windows
-```
+    # Example: Run a simple web server
+    docker run -d -p 8080:80 nginx
+    # Access at http://localhost:8080 from Windows
 
 ### File Sharing
 
-```bash
-# Windows side: Put files in ./shared/
-# VM side: Access files at /vagrant/shared/
+    # Windows side: Put files in ./shared/
+    # VM side: Access files at /vagrant/shared/
 
-# Example workflow:
-# 1. Create project on Windows in ./shared/my-project/
-# 2. Work on it from VM at /vagrant/shared/my-project/
-# 3. Use Docker to build/run from VM
-# 4. Edit files from Windows with your favorite IDE
-```
+    # Example workflow:
+    # 1. Create project on Windows in ./shared/my-project/
+    # 2. Work on it from VM at /vagrant/shared/my-project/
+    # 3. Use Docker to build/run from VM
+    # 4. Edit files from Windows with your favorite IDE
 
 ## Advanced Usage
 
@@ -182,115 +158,103 @@ docker run -d -p 8080:80 nginx
 
 Edit `Vagrantfile` to modify:
 
-```ruby
-# Memory and CPU
-vb.memory = "4096"  # 4GB RAM
-vb.cpus = 4         # 4 CPU cores
+    # Memory and CPU
+    vb.memory = "4096"  # 4GB RAM
+    vb.cpus = 4         # 4 CPU cores
 
-# Additional port forwarding
-config.vm.network "forwarded_port", guest: 3000, host: 3000  # Node.js
-config.vm.network "forwarded_port", guest: 5000, host: 5000  # Python/Flask
-```
+    # Additional port forwarding
+    config.vm.network "forwarded_port", guest: 3000, host: 3000  # Node.js
+    config.vm.network "forwarded_port", guest: 5000, host: 5000  # Python/Flask
 
 After making changes, run:
 
-```powershell
-vagrant reload
-```
+    vagrant reload
 
 ### Docker Development Examples
 
 #### Node.js Application
 
-```bash
-# Inside VM
-cd /vagrant/shared
-mkdir my-node-app && cd my-node-app
+    # Inside VM
+    cd /vagrant/shared
+    mkdir my-node-app && cd my-node-app
 
-# Create package.json
-cat > package.json << 'EOF'
-{
-  "name": "my-app",
-  "version": "1.0.0",
-  "main": "server.js",
-  "dependencies": {
-    "express": "^4.18.0"
-  }
-}
-EOF
+    # Create package.json
+    cat > package.json << 'EOF'
+    {
+      "name": "my-app",
+      "version": "1.0.0",
+      "main": "server.js",
+      "dependencies": {
+        "express": "^4.18.0"
+      }
+    }
+    EOF
 
-# Create Dockerfile
-cat > Dockerfile << 'EOF'
-FROM node:alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-EXPOSE 3000
-CMD ["node", "server.js"]
-EOF
+    # Create Dockerfile
+    cat > Dockerfile << 'EOF'
+    FROM node:alpine
+    WORKDIR /app
+    COPY package*.json ./
+    RUN npm install
+    COPY . .
+    EXPOSE 3000
+    CMD ["node", "server.js"]
+    EOF
 
-# Build and run
-docker build -t my-node-app .
-docker run -d -p 3000:3000 my-node-app
-```
+    # Build and run
+    docker build -t my-node-app .
+    docker run -d -p 3000:3000 my-node-app
 
 #### Python Flask Application
 
-```bash
-# Inside VM
-cd /vagrant/shared
-mkdir my-flask-app && cd my-flask-app
+    # Inside VM
+    cd /vagrant/shared
+    mkdir my-flask-app && cd my-flask-app
 
-# Create requirements.txt
-echo "Flask==2.3.3" > requirements.txt
+    # Create requirements.txt
+    echo "Flask==2.3.3" > requirements.txt
 
-# Create Dockerfile
-cat > Dockerfile << 'EOF'
-FROM python:alpine
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-EXPOSE 5000
-CMD ["python", "app.py"]
-EOF
+    # Create Dockerfile
+    cat > Dockerfile << 'EOF'
+    FROM python:alpine
+    WORKDIR /app
+    COPY requirements.txt ./
+    RUN pip install -r requirements.txt
+    COPY . .
+    EXPOSE 5000
+    CMD ["python", "app.py"]
+    EOF
 
-# Build and run
-docker build -t my-flask-app .
-docker run -d -p 5000:5000 my-flask-app
-```
+    # Build and run
+    docker build -t my-flask-app .
+    docker run -d -p 5000:5000 my-flask-app
 
 ### VM Management Commands
 
 #### Snapshot Management
 
-```powershell
-# Create snapshot
-vagrant snapshot save "clean-state"
+    # Create snapshot
+    vagrant snapshot save "clean-state"
 
-# List snapshots
-vagrant snapshot list
+    # List snapshots
+    vagrant snapshot list
 
-# Restore snapshot
-vagrant snapshot restore "clean-state"
+    # Restore snapshot
+    vagrant snapshot restore "clean-state"
 
-# Delete snapshot
-vagrant snapshot delete "clean-state"
-```
+    # Delete snapshot
+    vagrant snapshot delete "clean-state"
 
 #### VM Information
 
-```powershell
-# Check VM status
-vagrant status
+    # Check VM status
+    vagrant status
 
-# Get VM info
-vagrant ssh -c "cat /etc/alpine-release && free -h && docker ps"
+    # Get VM info
+    vagrant ssh -c "cat /etc/alpine-release && free -h && docker ps"
 
-# Check global Vagrant VMs
-vagrant global-status
-```
+    # Check global Vagrant VMs
+    vagrant global-status
 
 ## Troubleshooting
 
@@ -301,104 +265,88 @@ vagrant global-status
 **Symptoms:** `vagrant up` fails or hangs
 **Solutions:**
 
-```powershell
-# Check VirtualBox installation
-VBoxManage --version
+    # Check VirtualBox installation
+    VBoxManage --version
 
-# Check if virtualization is enabled in BIOS
-# Enable VT-x/AMD-V in BIOS settings
+    # Check if virtualization is enabled in BIOS
+    # Enable VT-x/AMD-V in BIOS settings
 
-# Try different provider
-# Edit Vagrantfile to use VMware instead of VirtualBox
-```
+    # Try different provider
+    # Edit Vagrantfile to use VMware instead of VirtualBox
 
 #### 2. Shared Folder Issues
 
 **Symptoms:** Files not syncing between Windows and VM
 **Solutions:**
 
-```bash
-# Inside VM - manually mount shared folder
-sudo mount -t vboxsf shared /vagrant/shared
+    # Inside VM - manually mount shared folder
+    sudo mount -t vboxsf shared /vagrant/shared
 
-# Restart VM
-exit
-vagrant reload
-```
+    # Restart VM
+    exit
+    vagrant reload
 
 #### 3. Docker Permission Issues
 
 **Symptoms:** `permission denied` when running Docker commands
 **Solutions:**
 
-```bash
-# Check if user is in docker group
-groups
+    # Check if user is in docker group
+    groups
 
-# Re-add user to docker group
-sudo addgroup vagrant docker
+    # Re-add user to docker group
+    sudo addgroup vagrant docker
 
-# Restart session
-exit
-vagrant ssh
-```
+    # Restart session
+    exit
+    vagrant ssh
 
 #### 4. Port Forwarding Not Working
 
 **Symptoms:** Can't access services from Windows
 **Solutions:**
 
-```powershell
-# Check Windows Firewall
-# Disable temporarily to test
+    # Check Windows Firewall
+    # Disable temporarily to test
 
-# Check if port is being used
-netstat -an | findstr :8080
+    # Check if port is being used
+    netstat -an | findstr :8080
 
-# Restart VM
-vagrant reload
-```
+    # Restart VM
+    vagrant reload
 
 #### 5. VM Performance Issues
 
 **Symptoms:** Slow performance, high CPU usage
 **Solutions:**
 
-```ruby
-# Edit Vagrantfile - reduce resources
-vb.memory = "1024"
-vb.cpus = 1
+    # Edit Vagrantfile - reduce resources
+    vb.memory = "1024"
+    vb.cpus = 1
 
-# Enable performance optimizations
-vb.customize ["modifyvm", :id, "--ioapic", "on"]
-vb.customize ["modifyvm", :id, "--hpet", "on"]
-```
+    # Enable performance optimizations
+    vb.customize ["modifyvm", :id, "--ioapic", "on"]
+    vb.customize ["modifyvm", :id, "--hpet", "on"]
 
 ### Performance Optimization Tips
 
 1. **Use NFS for better file sharing performance** (macOS/Linux hosts only):
 
-   ```ruby
-   config.vm.synced_folder "./shared", "/vagrant/shared", type: "nfs"
-   ```
+    config.vm.synced_folder "./shared", "/vagrant/shared", type: "nfs"
 
 2. **Allocate appropriate resources:**
 
-   - Development: 2GB RAM, 2 CPUs
-   - Heavy development: 4GB RAM, 4 CPUs
-   - Testing: 8GB RAM, 8 CPUs
+    - Development: 2GB RAM, 2 CPUs
+    - Heavy development: 4GB RAM, 4 CPUs
+    - Testing: 8GB RAM, 8 CPUs
 
 3. **Use linked clones for faster VM creation:**
 
-   ```ruby
-   vb.linked_clone = true
-   ```
+    vb.linked_clone = true
 
 4. **Suspend instead of shutdown for faster restarts:**
 
-   ```powershell
-   .\scripts\stop-vm.ps1 -Suspend
-   ```
+    .\scripts\stop-vm.ps1 -Suspend
 
 ## Customization Options
 
@@ -406,70 +354,62 @@ vb.customize ["modifyvm", :id, "--hpet", "on"]
 
 Edit `scripts/provision.sh` to add more tools:
 
-```bash
-# Add development tools
-apk add --no-cache \
-    python3 \
-    python3-pip \
-    nodejs \
-    npm \
-    go \
-    openjdk11 \
-    maven \
-    gradle
-```
+    # Add development tools
+    apk add --no-cache \
+        python3 \
+        python3-pip \
+        nodejs \
+        npm \
+        go \
+        openjdk11 \
+        maven \
+        gradle
 
 ### Environment Variables
 
 Add to `scripts/provision.sh`:
 
-```bash
-# Set environment variables
-cat >> /home/vagrant/.profile << 'EOF'
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
-export GO_PATH=/home/vagrant/go
-export PATH=$PATH:$GO_PATH/bin
-EOF
-```
+    # Set environment variables
+    cat >> /home/vagrant/.profile << 'EOF'
+    export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+    export GO_PATH=/home/vagrant/go
+    export PATH=$PATH:$GO_PATH/bin
+    EOF
 
 ### Custom Docker Images
 
 Create a `docker-compose.yml` in shared folder:
 
-```yaml
-version: '3.8'
-services:
-  web:
-    image: nginx:alpine
-    ports:
-      - "8080:80"
-    volumes:
-      - ./html:/usr/share/nginx/html
+    version: '3.8'
+    services:
+      web:
+        image: nginx:alpine
+        ports:
+          - "8080:80"
+        volumes:
+          - ./html:/usr/share/nginx/html
 
-  database:
-    image: postgres:alpine
-    environment:
-      POSTGRES_DB: myapp
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
-```
+      database:
+        image: postgres:alpine
+        environment:
+          POSTGRES_DB: myapp
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+        ports:
+          - "5432:5432"
 
 ## Best Practices
 
 ### 1. Project Organization
 
-```text
-vagrant-alpine-dev/
-├── shared/
-│   ├── project1/
-│   ├── project2/
-│   └── docker-compose.yml
-├── scripts/
-├── docs/
-└── Vagrantfile
-```
+    vagrant-alpine-dev/
+    ├── shared/
+    │   ├── project1/
+    │   ├── project2/
+    │   └── docker-compose.yml
+    ├── scripts/
+    ├── docs/
+    └── Vagrantfile
 
 ### 2. Version Control
 
@@ -516,39 +456,33 @@ This environment can replace Docker Desktop on Windows:
 
 ### System Monitoring
 
-```bash
-# Inside VM
-htop                    # System monitor
-docker stats           # Container resource usage
-df -h                   # Disk usage
-free -h                 # Memory usage
-```
+    # Inside VM
+    htop                    # System monitor
+    docker stats           # Container resource usage
+    df -h                   # Disk usage
+    free -h                 # Memory usage
 
 ### Regular Maintenance
 
-```bash
-# Update system packages
-sudo apk update && sudo apk upgrade
+    # Update system packages
+    sudo apk update && sudo apk upgrade
 
-# Clean Docker system
-docker system prune -af
+    # Clean Docker system
+    docker system prune -af
 
-# Clean package cache
-sudo apk cache clean
-```
+    # Clean package cache
+    sudo apk cache clean
 
 ### Log Management
 
-```bash
-# View system logs
-sudo tail -f /var/log/messages
+    # View system logs
+    sudo tail -f /var/log/messages
 
-# View Docker logs
-docker logs <container_name>
+    # View Docker logs
+    docker logs <container_name>
 
-# View service logs
-sudo rc-service docker status
-```
+    # View service logs
+    sudo rc-service docker status
 
 ## Contributing
 
